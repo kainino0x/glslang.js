@@ -1,4 +1,4 @@
-declare type ShaderType = 'vertex' | 'fragment' | 'compute';
+declare type ShaderStage = 'vertex' | 'fragment' | 'compute';
 
 declare interface ResultZeroCopy {
     readonly data: Uint32Array;
@@ -6,12 +6,12 @@ declare interface ResultZeroCopy {
 }
 
 declare interface Glslang {
-    compileGLSLZeroCopy(glsl: string, shader_type: ShaderType, gen_debug: boolean): ResultZeroCopy;
-    compileGLSL(glsl: string, shader_type: ShaderType, gen_debug: boolean): Uint32Array;
+    compileGLSLZeroCopy(glsl: string, shader_stage: ShaderStage, gen_debug: boolean): ResultZeroCopy;
+    compileGLSL(glsl: string, shader_type: ShaderStage, gen_debug: boolean): Uint32Array;
 }
 
 declare interface GlslangModule {
     then(f: (m: Glslang) => void): void;
 }
 
-export function glslangModule(): GlslangModule;
+export default function(): GlslangModule;
