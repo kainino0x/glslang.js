@@ -1,11 +1,11 @@
 {
-  "name": "@webgpu/glslang-web",
+  "name": "@webgpu/glslang",
   "version": "0.0.4",
   "main": "dist/glslang",
   "license": "glslang/LICENSE.txt",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kainino0x/-webgpu-glslang-web.git"
+    "url": "https://github.com/kainino0x/-webgpu-glslang.git"
   },
-  "homepage": "https://github.com/kainino0x/-webgpu-glslang-web"
+  "homepage": "https://github.com/kainino0x/-webgpu-glslang"
 }
