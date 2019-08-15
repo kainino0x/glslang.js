@@ -3,7 +3,7 @@ set -e
 set -x
 
 rm -rf build-web/ build-node/
-mkdir build-web build-node
+mkdir -p build-web build-node
 
 pushd build-web
 emconfigure cmake -GNinja \

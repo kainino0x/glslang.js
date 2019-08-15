@@ -10,8 +10,4 @@ declare interface Glslang {
     compileGLSL(glsl: string, shader_type: ShaderStage, gen_debug: boolean): Uint32Array;
 }
 
-declare interface GlslangModule {
-    then(f: (m: Glslang) => void): void;
-}
-
-export default function(): GlslangModule;
+export default function(): Glslang;
