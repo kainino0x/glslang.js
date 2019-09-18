@@ -2,39 +2,41 @@
 set -e
 set -x
 
-# Web build
+build() {
+    type=$1
+    shift
+    args=$@
+    mkdir -p build/$type
+    pushd build/$type
+    echo $args
+    emconfigure cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DENABLE_EMSCRIPTEN_SINGLE_FILE=OFF \
+        -DENABLE_HLSL=OFF \
+        -DBUILD_TESTING=OFF \
+        -DENABLE_OPT=OFF \
+        -DINSTALL_GTEST=OFF \
+        $args \
+        ../../glslang
+    make glslang.js
+    popd
+    mkdir -p dist/$type
+    cp build/$type/glslang/OSDependent/Web/glslang.{js,wasm} dist/$type/
+    gzip -9 -k -f dist/$type/glslang.{js,wasm}
+    brotli     -f dist/$type/glslang.{js,wasm}
+}
 
-mkdir -p build-web
+update_grammar() {
+    pushd glslang/glslang
+    ./updateGrammar "$@"
+    popd
+}
 
-pushd build-web
-emconfigure cmake -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DENABLE_AMD_EXTENSIONS=OFF \
-    -DENABLE_NV_EXTENSIONS=OFF \
-    -DENABLE_HLSL=OFF \
-    -DENABLE_EMSCRIPTEN_SINGLE_FILE=OFF \
-    ../glslang
-ninja glslang.js
-popd
+update_grammar web
+build web-min-nocompute   -DENABLE_GLSLANG_WEB=ON -DENABLE_GLSLANG_WEB_DEVEL=OFF
+build web-devel-nocompute -DENABLE_GLSLANG_WEB=ON -DENABLE_GLSLANG_WEB_DEVEL=ON
+update_grammar
+build web-devel           -DENABLE_GLSLANG_WEB=OFF
+build node-devel          -DENABLE_GLSLANG_WEB=OFF -DENABLE_EMSCRIPTEN_ENVIRONMENT_NODE=ON
 
-mkdir -p web
-cp build-web/glslang/glslang.{js,wasm} web/
-
-# Node build
-
-mkdir -p build-node
-
-pushd build-node
-emconfigure cmake -GNinja \
-    -DCMAKE_BUILD_TYPE=Release \
-    -DENABLE_AMD_EXTENSIONS=OFF \
-    -DENABLE_NV_EXTENSIONS=OFF \
-    -DENABLE_HLSL=OFF \
-    -DENABLE_EMSCRIPTEN_SINGLE_FILE=OFF \
-    -DEMSCRIPTEN_ENVIRONMENT_NODE=ON \
-    ../glslang
-ninja glslang.js
-popd
-
-mkdir -p dist
-cp build-node/glslang/glslang.{js,wasm} dist/
+wc -c dist/*/*

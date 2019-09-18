@@ -1,0 +1,44 @@
+<script type=module>
+import glslangModule from './dist/web-min-nocompute/glslang.js';
+
+(async () => {
+    const m = glslangModule();
+    console.log(m);
+    console.assert(m === glslangModule());
+    const glslang = await m;
+    console.log(glslang);
+    const code = glslang.compileGLSL(`#version 310 es
+    void main() {}`, 'fragment');
+    console.log(code);
+})();
+</script>
+
+<script type=module>
+import glslangModule from './dist/web-devel-nocompute/glslang.js';
+
+(async () => {
+    const m = glslangModule();
+    console.log(m);
+    console.assert(m === glslangModule());
+    const glslang = await m;
+    console.log(glslang);
+    const code = glslang.compileGLSL(`#version 310 es
+    void main() {}`, 'fragment');
+    console.log(code);
+})();
+</script>
+
+<script type=module>
+import glslangModule from './dist/web-devel/glslang.js';
+
+(async () => {
+    const m = glslangModule();
+    console.log(m);
+    console.assert(m === glslangModule());
+    const glslang = await m;
+    console.log(glslang);
+    const code = glslang.compileGLSL(`#version 310 es
+    void main() {}`, 'fragment');
+    console.log(code);
+})();
+</script>

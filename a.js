@@ -1,6 +1,6 @@
-const glslangModule = require('./dist/glslang.js');
+const glslangModule = require('.');
 
 glslangModule().then(glslang => {
     console.log(glslang.compileGLSL(`#version 310 es
-        void main() {}`, 'vertex', false));
+        void main() {}`, 'fragment', false));
 });

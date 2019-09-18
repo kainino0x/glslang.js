@@ -14,13 +14,13 @@ function ba(a){var b=["string","number","boolean","number","number"],c={string:f
 function qa(a,b,c){var e=b+c;for(c=b;a[c]&&!(c>=e);)++c;if(16<c-b&&a.subarray&&pa)return pa.decode(a.subarray(b,c));for(e="";b<c;){var f=a[b++];if(f&128){var g=a[b++]&63;if(192==(f&224))e+=String.fromCharCode((f&31)<<6|g);else{var h=a[b++]&63;f=224==(f&240)?(f&15)<<12|g<<6|h:(f&7)<<18|g<<12|h<<6|a[b++]&63;65536>f?e+=String.fromCharCode(f):(f-=65536,e+=String.fromCharCode(55296|f>>10,56320|f&1023))}}else e+=String.fromCharCode(f)}return e}function D(a){return a?qa(C,a,void 0):""}
 function B(a,b,c,e){if(0<e){e=c+e-1;for(var f=0;f<a.length;++f){var g=a.charCodeAt(f);if(55296<=g&&57343>=g){var h=a.charCodeAt(++f);g=65536+((g&1023)<<10)|h&1023}if(127>=g){if(c>=e)break;b[c++]=g}else{if(2047>=g){if(c+1>=e)break;b[c++]=192|g>>6}else{if(65535>=g){if(c+2>=e)break;b[c++]=224|g>>12}else{if(c+3>=e)break;b[c++]=240|g>>18;b[c++]=128|g>>12&63}b[c++]=128|g>>6&63}b[c++]=128|g&63}}b[c]=0}}
 function ra(a){for(var b=0,c=0;c<a.length;++c){var e=a.charCodeAt(c);55296<=e&&57343>=e&&(e=65536+((e&1023)<<10)|a.charCodeAt(++c)&1023);127>=e?++b:b=2047>=e?b+2:65535>=e?b+3:b+4}return b}"undefined"!==typeof TextDecoder&&new TextDecoder("utf-16le");function sa(a){0<a%65536&&(a+=65536-a%65536);return a}var E,w,C,x,ta,y,F,ia,ja;
-function ua(){d.HEAP8=w=new Int8Array(E);d.HEAP16=x=new Int16Array(E);d.HEAP32=y=new Int32Array(E);d.HEAPU8=C=new Uint8Array(E);d.HEAPU16=ta=new Uint16Array(E);d.HEAPU32=F=new Uint32Array(E);d.HEAPF32=ia=new Float32Array(E);d.HEAPF64=ja=new Float64Array(E)}var va=d.TOTAL_MEMORY||16777216;d.wasmMemory?A=d.wasmMemory:A=new WebAssembly.Memory({initial:va/65536});A&&(E=A.buffer);va=E.byteLength;ua();y[69820]=5522192;
+function ua(){d.HEAP8=w=new Int8Array(E);d.HEAP16=x=new Int16Array(E);d.HEAP32=y=new Int32Array(E);d.HEAPU8=C=new Uint8Array(E);d.HEAPU16=ta=new Uint16Array(E);d.HEAPU32=F=new Uint32Array(E);d.HEAPF32=ia=new Float32Array(E);d.HEAPF64=ja=new Float64Array(E)}var va=d.TOTAL_MEMORY||16777216;d.wasmMemory?A=d.wasmMemory:A=new WebAssembly.Memory({initial:va/65536});A&&(E=A.buffer);va=E.byteLength;ua();y[87504]=5592928;
 function G(a){for(;0<a.length;){var b=a.shift();if("function"==typeof b)b();else{var c=b.ga;"number"===typeof c?void 0===b.da?d.dynCall_v(c):d.dynCall_vi(c,b.da):c(void 0===b.da?null:b.da)}}}var wa=[],xa=[],ya=[],za=[];function Aa(){var a=d.preRun.shift();wa.unshift(a)}var H=0,Ba=null,I=null;d.preloadedImages={};d.preloadedAudios={};
 function Ca(){var a=K;return String.prototype.startsWith?a.startsWith("data:application/octet-stream;base64,"):0===a.indexOf("data:application/octet-stream;base64,")}var K="glslang.wasm";if(!Ca()){var Da=K;K=d.locateFile?d.locateFile(Da,t):t+Da}function Ea(){try{if(v)return new Uint8Array(v);if(ea)return ea(K);throw"both async and sync fetching of the wasm failed";}catch(a){z(a)}}
 function Fa(){return v||!da&&!r||"function"!==typeof fetch?new Promise(function(a){a(Ea())}):fetch(K,{credentials:"same-origin"}).then(function(a){if(!a.ok)throw"failed to load wasm binary file at '"+K+"'";return a.arrayBuffer()}).catch(function(){return Ea()})}
 function Ga(a){function b(a){d.asm=a.exports;H--;d.monitorRunDependencies&&d.monitorRunDependencies(H);0==H&&(null!==Ba&&(clearInterval(Ba),Ba=null),I&&(a=I,I=null,a()))}function c(a){b(a.instance)}function e(a){return Fa().then(function(a){return WebAssembly.instantiate(a,f)}).then(a,function(a){u("failed to asynchronously prepare wasm: "+a);z(a)})}var f={env:a,global:{NaN:NaN,Infinity:Infinity},"global.Math":Math,asm2wasm:ha};H++;d.monitorRunDependencies&&d.monitorRunDependencies(H);if(d.instantiateWasm)try{return d.instantiateWasm(f,
 b)}catch(g){return u("Module.instantiateWasm callback failed with error: "+g),!1}(function(){if(v||"function"!==typeof WebAssembly.instantiateStreaming||Ca()||"function"!==typeof fetch)return e(c);fetch(K,{credentials:"same-origin"}).then(function(a){return WebAssembly.instantiateStreaming(a,f).then(c,function(a){u("wasm streaming compile failed: "+a);u("falling back to ArrayBuffer instantiation");e(c)})})})();return{}}
-d.asm=function(a,b){b.memory=A;b.table=new WebAssembly.Table({initial:1320,maximum:1320,element:"anyfunc"});b.__memory_base=1024;b.__table_base=0;return Ga(b)};xa.push({ga:function(){Ha()}});function Ia(a){d.___errno_location&&(y[d.___errno_location()>>2]=a);return a}var Ja=[null,[],[]],L=0;function M(){L+=4;return y[L-4>>2]}var N={};function Ka(a){switch(a){case 1:return 0;case 2:return 1;case 4:return 2;case 8:return 3;default:throw new TypeError("Unknown type size: "+a);}}var La=void 0;
+d.asm=function(a,b){b.memory=A;b.table=new WebAssembly.Table({initial:1064,maximum:1064,element:"anyfunc"});b.__memory_base=1024;b.__table_base=0;return Ga(b)};xa.push({ga:function(){Ha()}});function Ia(a){d.___errno_location&&(y[d.___errno_location()>>2]=a);return a}var Ja=[null,[],[]],L=0;function M(){L+=4;return y[L-4>>2]}var N={};function Ka(a){switch(a){case 1:return 0;case 2:return 1;case 4:return 2;case 8:return 3;default:throw new TypeError("Unknown type size: "+a);}}var La=void 0;
 function O(a){for(var b="";C[a];)b+=La[C[a++]];return b}var Ma={},Na={},Oa={};function Pa(a,b){if(void 0===a)a="_unknown";else{a=a.replace(/[^a-zA-Z0-9_]/g,"$");var c=a.charCodeAt(0);a=48<=c&&57>=c?"_"+a:a}return(new Function("body","return function "+a+'() {\n    "use strict";    return body.apply(this, arguments);\n};\n'))(b)}
 function Ra(a){var b=Error,c=Pa(a,function(b){this.name=a;this.message=b;b=Error(b).stack;void 0!==b&&(this.stack=this.toString()+"\n"+b.replace(/^Error(:[^\n]*)?\n/,""))});c.prototype=Object.create(b.prototype);c.prototype.constructor=c;c.prototype.toString=function(){return void 0===this.message?this.name:this.name+": "+this.message};return c}var Sa=void 0;function P(a){throw new Sa(a);}
 function Q(a,b,c){c=c||{};if(!("argPackAdvance"in b))throw new TypeError("registerType registeredInstance requires argPackAdvance");var e=b.name;a||P('type "'+e+'" must have a positive integer typeid pointer');if(Na.hasOwnProperty(a)){if(c.ia)return;P("Cannot register type '"+e+"' twice")}Na[a]=b;delete Oa[a];Ma.hasOwnProperty(a)&&(b=Ma[a],delete Ma[a],b.forEach(function(a){a()}))}var Ta=[],R=[{},{value:void 0},{value:null},{value:!0},{value:!1}];
@@ -45,7 +45,7 @@ Wa(c)+'" from JS side to C/C++ side to an argument of type "'+b+'", which is out
 b;Q(a,{name:b,fromWireType:function(a){var b=F[a>>2];if(c){var e=C[a+4+b],h=0;0!=e&&(h=e,C[a+4+b]=0);var k=a+4;for(e=0;e<=b;++e){var q=a+4+e;if(0==C[q]){k=D(k);if(void 0===l)var l=k;else l+=String.fromCharCode(0),l+=k;k=q+1}}0!=h&&(C[a+4+b]=h)}else{l=Array(b);for(e=0;e<b;++e)l[e]=String.fromCharCode(C[a+4+e]);l=l.join("")}T(a);return l},toWireType:function(a,b){b instanceof ArrayBuffer&&(b=new Uint8Array(b));var e="string"===typeof b;e||b instanceof Uint8Array||b instanceof Uint8ClampedArray||b instanceof
 Int8Array||P("Cannot pass non-string to std::string");var f=(c&&e?function(){return ra(b)}:function(){return b.length})(),k=ab(4+f+1);F[k>>2]=f;if(c&&e)B(b,C,k+4,f+1);else if(e)for(e=0;e<f;++e){var q=b.charCodeAt(e);255<q&&(T(k),P("String has UTF-16 code units that do not fit in 8 bits"));C[k+4+e]=q}else for(e=0;e<f;++e)C[k+4+e]=b[e];null!==a&&a.push(T,k);return k},argPackAdvance:8,readValueFromPointer:Va,Z:function(a){T(a)}})},E:function(a,b,c){c=O(c);if(2===b){var e=function(){return ta};var f=
 1}else 4===b&&(e=function(){return F},f=2);Q(a,{name:c,fromWireType:function(a){for(var b=e(),c=F[a>>2],g=Array(c),l=a+4>>f,n=0;n<c;++n)g[n]=String.fromCharCode(b[l+n]);T(a);return g.join("")},toWireType:function(a,c){var g=e(),h=c.length,l=ab(4+h*b);F[l>>2]=h;for(var n=l+4>>f,J=0;J<h;++J)g[n+J]=c.charCodeAt(J);null!==a&&a.push(T,l);return l},argPackAdvance:8,readValueFromPointer:Va,Z:function(a){T(a)}})},D:function(a,b){b=O(b);Q(a,{ua:!0,name:b,argPackAdvance:0,fromWireType:function(){},toWireType:function(){}})},
-b:function(){d.abort()},B:Za,A:function(a,b,c){C.set(C.subarray(b,b+c),a)},z:function(a){if(2147418112<a)return!1;for(var b=Math.max(Za(),16777216);b<a;)536870912>=b?b=sa(2*b):b=Math.min(sa((3*b+2147483648)/4),2147418112);if(!bb(b))return!1;ua();return!0},h:S,y:function(a){return Math.log(a)/Math.LN2},g:function(a){var b=U.X[a];U.X.splice(a,1);oa(b)},f:U,x:function(){z("trap!")},w:function(){return 0},u:function(){},t:function(){},s:function(a,b,c,e){return db(a,b,c,e)},r:function(){z("OOM")},a:279280},
+b:function(){d.abort()},B:Za,A:function(a,b,c){C.set(C.subarray(b,b+c),a)},z:function(a){if(2147418112<a)return!1;for(var b=Math.max(Za(),16777216);b<a;)536870912>=b?b=sa(2*b):b=Math.min(sa((3*b+2147483648)/4),2147418112);if(!bb(b))return!1;ua();return!0},h:S,y:function(a){return Math.log(a)/Math.LN2},g:function(a){var b=U.X[a];U.X.splice(a,1);oa(b)},f:U,x:function(){z("trap!")},w:function(){return 0},u:function(){},t:function(){},s:function(a,b,c,e){return db(a,b,c,e)},r:function(){z("OOM")},a:350016},
 E);d.asm=ib;var Ha=d.__GLOBAL__sub_I_bind_cpp=function(){return d.asm.J.apply(null,arguments)},hb=d.__ZSt18uncaught_exceptionv=function(){return d.asm.K.apply(null,arguments)};d.___embind_register_native_and_builtin_types=function(){return d.asm.L.apply(null,arguments)};d.___getTypeName=function(){return d.asm.M.apply(null,arguments)};d._convert_glsl_to_spirv=function(){return d.asm.N.apply(null,arguments)};d._destroy_output_buffer=function(){return d.asm.O.apply(null,arguments)};
 var T=d._free=function(){return d.asm.P.apply(null,arguments)},ab=d._malloc=function(){return d.asm.Q.apply(null,arguments)},ma=d.stackAlloc=function(){return d.asm.T.apply(null,arguments)},oa=d.stackRestore=function(){return d.asm.U.apply(null,arguments)},na=d.stackSave=function(){return d.asm.V.apply(null,arguments)};d.dynCall_v=function(){return d.asm.R.apply(null,arguments)};d.dynCall_vi=function(){return d.asm.S.apply(null,arguments)};d.asm=ib;var Z;
 d.then=function(a){if(Z)a(d);else{var b=d.onRuntimeInitialized;d.onRuntimeInitialized=function(){b&&b();a(d)}}return d};I=function jb(){Z||kb();Z||(I=jb)};
@@ -64,28 +64,28 @@ if (typeof exports === 'object' && typeof module === 'object')
     else if (typeof exports === 'object')
       exports["Module"] = Module;
     export default (() => {
-  const initialize = () => {
-    return new Promise(resolve => {
-      Module({
-        locateFile() {
-          const i = import.meta.url.lastIndexOf('/')
-          return import.meta.url.substring(0, i) + '/glslang.wasm';
-        },
-        onRuntimeInitialized() {
-          resolve({
-            compileGLSLZeroCopy: this.compileGLSLZeroCopy,
-            compileGLSL: this.compileGLSL,
-          });
-        },
-      });
-    });
-  };
+    const initialize = () => {
+        return new Promise(resolve => {
+            Module({
+                locateFile() {
+                    const i = import.meta.url.lastIndexOf('/')
+                    return import.meta.url.substring(0, i) + '/glslang.wasm';
+                },
+                onRuntimeInitialized() {
+                    resolve({
+                        compileGLSLZeroCopy: this.compileGLSLZeroCopy,
+                        compileGLSL: this.compileGLSL,
+                    });
+                },
+            });
+        });
+    };
 
-  let instance;
-  return () => {
-    if (!instance) {
-      instance = initialize();
-    }
-    return instance;
-  };
+    let instance;
+    return () => {
+        if (!instance) {
+            instance = initialize();
+        }
+        return instance;
+    };
 })();
