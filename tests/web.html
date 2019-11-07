@@ -1,0 +1,32 @@
+<script type=module>
+import m_min_nocompute from '../dist/web-min-nocompute/glslang.js';
+import m_devel_nocompute from '../dist/web-devel-nocompute/glslang.js';
+import m_devel from '../dist/web-devel/glslang.js';
+
+import { testCases, runTest } from './helper.mjs';
+
+(async () => {
+    const p_min_nocompute = m_min_nocompute();
+    console.assert(p_min_nocompute === m_min_nocompute());
+    const min_nocompute = await p_min_nocompute;
+
+    const p_devel_nocompute = m_devel_nocompute();
+    console.assert(p_devel_nocompute === m_devel_nocompute());
+    const devel_nocompute = await p_devel_nocompute;
+
+    const p_devel = m_devel();
+    console.assert(p_devel === m_devel());
+    const devel = await p_devel;
+
+    for (const c of testCases) {
+        console.warn(c);
+        console.log('min_nocompute');
+        runTest(min_nocompute, ...c);
+        console.log('devel_nocompute');
+        runTest(devel_nocompute, ...c);
+        console.log('devel');
+        runTest(devel, ...c);
+    }
+    console.warn('Done!');
+})();
+</script>
