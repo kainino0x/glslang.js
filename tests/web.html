@@ -2,6 +2,7 @@
 import m_min_nocompute from '../dist/web-min-nocompute/glslang.js';
 import m_devel_nocompute from '../dist/web-devel-nocompute/glslang.js';
 import m_devel from '../dist/web-devel/glslang.js';
+import m_devel_onefile from '../dist/web-devel/glslang.onefile.js';
 
 import { testCases, runTest } from './helper.mjs';
 
@@ -18,14 +19,20 @@ import { testCases, runTest } from './helper.mjs';
     console.assert(p_devel === m_devel());
     const devel = await p_devel;
 
+    const p_devel_onefile = m_devel_onefile();
+    console.assert(p_devel_onefile === m_devel_onefile());
+    const devel_onefile = await p_devel_onefile;
+
     for (const c of testCases) {
         console.warn(c);
-        console.log('min_nocompute');
+        console.log('min-nocompute');
         runTest(min_nocompute, ...c);
-        console.log('devel_nocompute');
+        console.log('devel-nocompute');
         runTest(devel_nocompute, ...c);
         console.log('devel');
         runTest(devel, ...c);
+        console.log('devel.onefile');
+        runTest(devel_onefile, ...c);
     }
     console.warn('Done!');
 })();
