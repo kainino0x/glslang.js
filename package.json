@@ -1,8 +1,11 @@
 {
   "name": "@webgpu/glslang",
   "version": "0.0.12",
-  "main": "dist/node-devel/glslang",
   "license": "glslang/LICENSE.txt",
+  "main": "dist/node-devel/glslang",
+  "files": [
+    "dist/**/*"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/kainino0x/-webgpu-glslang.git"
