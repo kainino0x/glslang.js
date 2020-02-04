@@ -1,4 +1,4 @@
-# @webgpu/glslang
+# [@webgpu/glslang](https://www.npmjs.com/package/@webgpu/glslang)
 
 This is a GLSL-to-SPIR-V compiler for the Web and Node.
 It is a WebAssembly build of [glslang](https://github.com/KhronosGroup/glslang).
@@ -12,10 +12,10 @@ There are several build configurations:
 * `dist/node-devel`: Build for Node with non-async startup and all features.
   (To use this, just import `@webgpu/glslang`.)
 
-## Building
+## Re-building
 
 You shouldn't need to do this, but here is how you can regenerate the files in
-`dist/`. This should work on macOS (*with GNU Bison*) and on Linux.
+`dist/`. This should work on macOS (**with GNU Bison**) and on Linux.
 
 ### Setup
 

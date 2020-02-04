@@ -4,7 +4,9 @@
   "license": "glslang/LICENSE.txt",
   "main": "dist/node-devel/glslang",
   "files": [
-    "dist/**/*"
+    "dist/**/*.wasm",
+    "dist/**/*.js",
+    "dist/**/*.d.ts"
   ],
   "repository": {
     "type": "git",
