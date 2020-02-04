@@ -16,14 +16,26 @@ export const testCases = [
 export function runTest(glslang, type, glslcode) {
     try {
         {
-            const code = glslang.compileGLSL(glslcode, type, false);
-            const result = glslang.compileGLSLZeroCopy(glslcode, type, false);
+            const code = glslang.compileGLSL(glslcode, type, false, '1.3');
+            const result = glslang.compileGLSLZeroCopy(glslcode, type, false, '1.3');
             console.log(code.length, result.data.toString());
             result.free();
         }
         {
-            const code = glslang.compileGLSL(glslcode, type, true);
-            const result = glslang.compileGLSLZeroCopy(glslcode, type, true);
+            const code = glslang.compileGLSL(glslcode, type, true, '1.3');
+            const result = glslang.compileGLSLZeroCopy(glslcode, type, true, '1.3');
+            console.log(code.length, result.data.toString());
+            result.free();
+        }
+        {
+            const code = glslang.compileGLSL(glslcode, type, false, '1.0');
+            const result = glslang.compileGLSLZeroCopy(glslcode, type, false, '1.0');
+            console.log(code.length, result.data.toString());
+            result.free();
+        }
+        {
+            const code = glslang.compileGLSL(glslcode, type);
+            const result = glslang.compileGLSLZeroCopy(glslcode, type);
             console.log(code.length, result.data.toString());
             result.free();
         }

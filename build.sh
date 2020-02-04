@@ -22,6 +22,7 @@ build() {
     popd
     mkdir -p dist/$type
     cp build/$type/glslang/OSDependent/Web/glslang.{js,wasm} dist/$type/
+    cp glslang.d.ts dist/$type/
     gzip -9 -k -f dist/$type/glslang.{js,wasm}
     brotli     -f dist/$type/glslang.{js,wasm}
 }
@@ -31,6 +32,9 @@ update_grammar() {
     ./updateGrammar "$@"
     popd
 }
+reset_grammar() {
+    git -C glslang checkout glslang/MachineIndependent/glslang_tab.cpp{,.h}
+}
 
 update_grammar web
 build web-min-nocompute   -DENABLE_GLSLANG_WEB=ON -DENABLE_GLSLANG_WEB_DEVEL=OFF
@@ -38,5 +42,6 @@ build web-devel-nocompute -DENABLE_GLSLANG_WEB=ON -DENABLE_GLSLANG_WEB_DEVEL=ON
 update_grammar
 build web-devel           -DENABLE_GLSLANG_WEB=OFF
 build node-devel          -DENABLE_GLSLANG_WEB=OFF -DENABLE_EMSCRIPTEN_ENVIRONMENT_NODE=ON
+reset_grammar
 
 wc -c dist/*/*
