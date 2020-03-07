@@ -21,10 +21,16 @@ build() {
     make glslang.js
     popd
     mkdir -p dist/$type
-    cp build/$type/glslang/OSDependent/Web/glslang.{js,wasm} dist/$type/
     cp glslang.d.ts dist/$type/
-    gzip -9 -k -f dist/$type/glslang.{js,wasm}
-    brotli     -f dist/$type/glslang.{js,wasm}
+
+    cp build/$type/glslang/OSDependent/Web/glslang.js dist/$type/
+    gzip -9 -k -f dist/$type/glslang.js
+    brotli     -f dist/$type/glslang.js
+    if [ -e build/$type/glslang/OSDependent/Web/glslang.wasm ] ; then
+        cp build/$type/glslang/OSDependent/Web/glslang.wasm dist/$type/
+        gzip -9 -k -f dist/$type/glslang.wasm
+        brotli     -f dist/$type/glslang.wasm
+    fi
 }
 
 update_grammar() {
