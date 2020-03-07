@@ -7,8 +7,8 @@ declare interface ResultZeroCopy {
 }
 
 declare interface Glslang {
-    compileGLSLZeroCopy(glsl: string, shader_stage: ShaderStage, gen_debug: boolean, spirv_version: SpirvVersion): ResultZeroCopy;
-    compileGLSL(glsl: string, shader_type: ShaderStage, gen_debug: boolean, spirv_version: SpirvVersion): Uint32Array;
+    compileGLSLZeroCopy(glsl: string, shader_stage: ShaderStage, gen_debug: boolean, spirv_version?: SpirvVersion): ResultZeroCopy;
+    compileGLSL(glsl: string, shader_type: ShaderStage, gen_debug: boolean, spirv_version?: SpirvVersion): Uint32Array;
 }
 
 export default function(): Promise<Glslang>;
