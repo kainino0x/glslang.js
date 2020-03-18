@@ -17,6 +17,16 @@ There are several build configurations:
 You shouldn't need to do this, but here is how you can regenerate the files in
 `dist/`. This should work on macOS (**with GNU Bison**) and on Linux.
 
+### Using docker with docker-compose
+
+Just run the following
+
+```
+$ docker-compose up --build
+```
+
+And wait a while 🏗️
+
 ### Setup
 
 - Make sure Emscripten is on the path (e.g. with emsdk, do `source emsdk_env.sh` first).
