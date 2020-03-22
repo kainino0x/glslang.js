@@ -1,6 +1,8 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 set -x
+
+NUM_CORES=$(nproc)
 
 build() {
     type=$1
@@ -18,7 +20,7 @@ build() {
         -DINSTALL_GTEST=OFF \
         $args \
         ../../glslang
-    make glslang.js
+    make -j $(( $NUM_CORES )) glslang.js
     popd
     mkdir -p dist/$type
     cp glslang.d.ts dist/$type/
@@ -40,15 +42,16 @@ update_grammar() {
 }
 reset_grammar() {
     git -C glslang checkout glslang/MachineIndependent/glslang_tab.cpp{,.h}
+    git -C glslang checkout glslang/MachineIndependent/glslang.y
 }
 
 update_grammar web
 build web-min-nocompute   -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=ON -DENABLE_GLSLANG_WEBMIN_DEVEL=OFF
-build web-devel-nocompute -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=ON -DENABLE_GLSLANG_WEBMIN_DEVEL=ON
-update_grammar
-build web-devel           -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF
-build web-devel-onefile   -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF -DENABLE_EMSCRIPTEN_SINGLE_FILE=ON
-build node-devel          -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF -DENABLE_EMSCRIPTEN_ENVIRONMENT_NODE=ON
+# build web-devel-nocompute -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=ON -DENABLE_GLSLANG_WEBMIN_DEVEL=ON
+# update_grammar
+# build web-devel           -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF
+# build web-devel-onefile   -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF -DENABLE_EMSCRIPTEN_SINGLE_FILE=ON
+# build node-devel          -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF -DENABLE_EMSCRIPTEN_ENVIRONMENT_NODE=ON
 reset_grammar
 
 wc -c dist/*/*
