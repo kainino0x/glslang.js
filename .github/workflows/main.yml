@@ -1,11 +1,11 @@
 name: CI
 
 on:
-    push:
-      branches: [ master ]
-    pull_request:
-      branches: [ master ]
-  
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
 env:
   REPO_NAME: glslang.js
   DOCKER_TAG: glslang.js:${{github.sha}}
@@ -16,6 +16,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          submodules: recursive
       - name: Build the Docker image
         run: docker-compose build
       - name: Build web-min-nocompute
