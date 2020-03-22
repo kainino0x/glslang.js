@@ -25,4 +25,4 @@ jobs:
       - name: Build node-devl
         run: docker-compose run --rm build ./build.sh node-devel
       - name: Run tests
-        run: yarn test
+        run: yarn install && yarn test
