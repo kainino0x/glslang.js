@@ -22,3 +22,7 @@ jobs:
         run: docker-compose build
       - name: Build web-min-nocompute
         run: docker-compose run --rm build ./build.sh web-min-nocompute
+      - name: Build node-devl
+        run: docker-compose run --rm build ./build.sh node-devel
+      - name: Run tests
+        run: yarn test
