@@ -1,0 +1,22 @@
+name: CI
+
+on:
+    push:
+      branches: [ master ]
+    pull_request:
+      branches: [ master ]
+  
+env:
+  REPO_NAME: glslang.js
+  DOCKER_TAG: glslang.js:${{github.sha}}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: docker build . --tag $DOCKER_TAG
+      - name: Build web-min-nocompute
+        run: docker run --rm $DOCKER_TAG ./build.sh web-min-nocompute
