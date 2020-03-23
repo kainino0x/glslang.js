@@ -22,7 +22,9 @@ jobs:
         run: docker-compose build
       - name: Build web-min-nocompute
         run: docker-compose run --rm build ./build.sh web-min-nocompute
-      - name: Build node-devl
+      - name: Build node-devel
+        run: docker-compose run --rm build ./build.sh node-devel
+      - name: Build node-devel (again) #TODO: figure out why this is needed
         run: docker-compose run --rm build ./build.sh node-devel
       - name: Run tests
         run: yarn install && yarn test
