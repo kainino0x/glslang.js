@@ -12,5 +12,11 @@
     "type": "git",
     "url": "https://github.com/kainino0x/-webgpu-glslang.git"
   },
-  "homepage": "https://github.com/kainino0x/-webgpu-glslang"
+  "homepage": "https://github.com/kainino0x/-webgpu-glslang",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  },
+  "scripts": {
+    "test": "jest"
+  }
 }

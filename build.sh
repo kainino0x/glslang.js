@@ -1,8 +1,10 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 set -x
 
-build() {
+NUM_CORES=$(nproc)
+
+build() { 
     type=$1
     shift
     args=$@
@@ -18,7 +20,7 @@ build() {
         -DINSTALL_GTEST=OFF \
         $args \
         ../../glslang
-    make glslang.js
+    make -j $(( $NUM_CORES )) glslang.js
     popd
     mkdir -p dist/$type
     cp glslang.d.ts dist/$type/
@@ -40,15 +42,62 @@ update_grammar() {
 }
 reset_grammar() {
     git -C glslang checkout glslang/MachineIndependent/glslang_tab.cpp{,.h}
+    git -C glslang checkout glslang/MachineIndependent/glslang.y
 }
 
+configs=$@
+if [ $# -eq 0 ]; then
+    echo "Building all configs by default"
+    configs="\
+        web-min-nocompute\
+        web-devel-nocompute\
+        web-devel\
+        web-devel-onefile\
+        node-devel\
+        " 
+fi
+
 update_grammar web
-build web-min-nocompute   -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=ON -DENABLE_GLSLANG_WEBMIN_DEVEL=OFF
-build web-devel-nocompute -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=ON -DENABLE_GLSLANG_WEBMIN_DEVEL=ON
+if [[ " $configs " =~ .*\ (web-min-nocompute)\ .* ]]; then
+    echo Building ${BASH_REMATCH[1]}
+    build web-min-nocompute\
+        -DENABLE_GLSLANG_JS=ON\
+        -DENABLE_GLSLANG_WEBMIN=ON\
+        -DENABLE_GLSLANG_WEBMIN_DEVEL=OFF
+fi
+
+if [[ " $configs " =~ .*\ (web-devel-nocompute)\ .* ]]; then
+    echo Building ${BASH_REMATCH[1]}
+    build web-devel-nocompute\
+        -DENABLE_GLSLANG_JS=ON\
+        -DENABLE_GLSLANG_WEBMIN=ON\
+        -DENABLE_GLSLANG_WEBMIN_DEVEL=ON
+fi
+
 update_grammar
-build web-devel           -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF
-build web-devel-onefile   -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF -DENABLE_EMSCRIPTEN_SINGLE_FILE=ON
-build node-devel          -DENABLE_GLSLANG_JS=ON -DENABLE_GLSLANG_WEBMIN=OFF -DENABLE_EMSCRIPTEN_ENVIRONMENT_NODE=ON
+if [[ " $configs " =~ .*\ (web-devel)\ .* ]]; then
+    echo Building ${BASH_REMATCH[1]}
+    build web-devel\
+        -DENABLE_GLSLANG_JS=ON\
+        -DENABLE_GLSLANG_WEBMIN=OFF
+fi
+
+if [[ " $configs " =~ .*\ (web-devel-onefile)\ .* ]]; then
+    echo Building ${BASH_REMATCH[1]}
+    build web-devel-onefile\
+        -DENABLE_GLSLANG_JS=ON\
+        -DENABLE_GLSLANG_WEBMIN=OFF\
+        -DENABLE_EMSCRIPTEN_SINGLE_FILE=ON
+fi
+
+if [[ " $configs " =~ .*\ (node-devel)\ .* ]]; then
+    echo Building ${BASH_REMATCH[1]}
+    build node-devel\
+        -DENABLE_GLSLANG_JS=ON\
+        -DENABLE_GLSLANG_WEBMIN=OFF\
+        -DENABLE_EMSCRIPTEN_ENVIRONMENT_NODE=ON
+fi
+
 reset_grammar
 
 wc -c dist/*/*

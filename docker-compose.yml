@@ -6,6 +6,6 @@ services:
       args:
         EMSDK_VERSION: "1.39.4"
     working_dir: /app
-    command: bash ./build.sh
+    command: ./build.sh
     volumes:
       - ./:/app

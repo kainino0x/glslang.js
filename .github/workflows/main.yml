@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+env:
+  REPO_NAME: glslang.js
+  DOCKER_TAG: glslang.js:${{github.sha}}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+      - name: Build the Docker image
+        run: docker-compose build
+      - name: Build web-min-nocompute
+        run: docker-compose run --rm build ./build.sh web-min-nocompute
+      - name: Build node-devel
+        run: docker-compose run --rm build ./build.sh node-devel
+      - name: Build node-devel (again) #TODO: figure out why this is needed
+        run: docker-compose run --rm build ./build.sh node-devel
+      - name: Run tests
+        run: yarn install && yarn test
